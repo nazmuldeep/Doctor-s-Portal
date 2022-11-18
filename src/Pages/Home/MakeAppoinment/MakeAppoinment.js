@@ -11,9 +11,9 @@ const MakeAppointment = () => {
                 background: `url(${appointment})`
             }}
         >
-            <div className="hero">
-                <div className="hero-content flex-col lg:flex-row">
-                    <div className='lg:w-1/2'>
+            <div className="hero ">
+                <div className="p-0 hero-content flex-col lg:flex-row">
+                    <div className='lg:w-1/2 '>
                         <img src={doctor} alt="" className="-mt-32 hidden md:block  rounded-lg shadow-2xl" />
                     </div>
                     <div className='w-1/2'>
