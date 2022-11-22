@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider';
 
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { createUser, updateUser } = useContext(AuthContext);
     const [signUpError, setSignUpError] = useState('')
+    const navigate = useNavigate();
     const handleSignUp = (data) => {
         console.log(data);
         setSignUpError('')
@@ -17,10 +18,12 @@ const SignUp = () => {
                 console.log(user);
                 toast('User create succesfully')
                 const userInfo = {
-                    displayNamne: data.name
+                    displayName: data.name
                 }
                 updateUser(userInfo)
-                    .then(() => { })
+                    .then(() => {
+                        navigate('/')
+                    })
                     .catch(err => console.log(err))
             })
             .catch(error => {
@@ -52,10 +55,12 @@ const SignUp = () => {
                         <label className="label"> <span className="label-text">Password</span></label>
                         <input type="password" {...register("password", {
                             required: "Password is required",
+
                             minLength: {
                                 value: 6, message: "Password must be 6 characters long",
-                                pattern: { value: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])/, message: 'Password must have uppercase, number and special characters' }
+
                             },
+                            pattern: { value: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])/, message: 'Password must have uppercase, number and special characters' }
 
                         })} className="input input-bordered w-full max-w-xs" />
                         {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
